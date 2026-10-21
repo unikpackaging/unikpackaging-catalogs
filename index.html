@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>UnikPackaging · Wholesale Box Catalog</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <div class="logo">U</div>
+      <div><div class="b1">UnikPackaging</div><div class="b2">Wholesale Box Catalog</div></div>
+    </div>
+    <div class="meta">
+      <div><span>Contact</span><a href="mailto:info@unikpackaging.com">info@unikpackaging.com</a></div>
+      <div><span>Web</span><a href="https://unikpackaging.com">unikpackaging.com</a></div>
+      <div><span>Pricing</span>Quoted on request</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap layout">
+  <aside class="side" id="side">
+    <div class="side-h">Collections</div>
+    <nav id="colnav"></nav>
+  </aside>
+
+  <main>
+    <section class="doc-head">
+      <div>
+        <h1 id="title">All collections</h1>
+        <p id="sub" class="muted"></p>
+      </div>
+      <div class="tools">
+        <select id="colsel" aria-label="Collection"></select>
+        <input id="q" type="search" placeholder="Search item no. (e.g. W7421) or size" autocomplete="off">
+        <button id="print" class="btn" type="button">Print / PDF</button>
+      </div>
+    </section>
+
+    <div class="tablewrap">
+      <table class="cat">
+        <thead><tr>
+          <th class="c-n">#</th><th class="c-ph">Photo</th><th>Item No.</th><th>Size</th>
+          <th>Carton size</th><th class="r">Qty / carton</th><th class="r">CBM / carton</th><th class="r">Price</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div id="empty" class="empty" hidden>No items match your search.</div>
+      <div id="more" class="more" hidden><button class="btn" id="morebtn" type="button">Show more</button></div>
+    </div>
+
+    <footer class="foot">
+      <p>Sizes are L × W × H in cm unless noted; L/M/S = large/medium/small box in a nested set. Carton data is per export carton.
+      Prices, minimums and lead times are quoted on request — contact <a href="mailto:info@unikpackaging.com">info@unikpackaging.com</a>.
+      Custom colours, prints and sizes available for volume orders.</p>
+      <p class="muted">© UnikPackaging · Confidential catalog for trade customers.</p>
+    </footer>
+  </main>
+</div>
+
+<div id="lb" class="lb" hidden><img id="lbimg" alt=""><div id="lbcap"></div></div>
+<script src="assets/data.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

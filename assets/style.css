@@ -1,0 +1,52 @@
+:root{--ink:#1d2433;--mut:#6b7385;--line:#e4e7ee;--bg:#f6f7fa;--acc:#b8875a;--acc2:#2c3a52}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+a{color:var(--acc2)}
+.wrap{max-width:1320px;margin:0 auto;padding:0 20px}
+.top{background:#fff;border-bottom:3px solid var(--acc)}
+.top-in{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 20px;flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:44px;height:44px;border-radius:10px;background:var(--acc2);color:#fff;font:700 24px/44px Georgia,serif;text-align:center}
+.b1{font:700 22px/1.1 Georgia,"Times New Roman",serif;letter-spacing:.3px}
+.b2{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:1.5px}
+.meta{display:grid;grid-template-columns:auto auto auto;gap:4px 22px;font-size:13px}
+.meta span{display:block;color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.layout{display:grid;grid-template-columns:230px 1fr;gap:22px;padding-top:22px;padding-bottom:30px}
+.side{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:10px}
+.side-h{padding:12px 14px;font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);border-bottom:1px solid var(--line)}
+.side a{display:block;padding:8px 14px;text-decoration:none;color:var(--ink);border-left:3px solid transparent;font-size:13px}
+.side a small{display:block;color:var(--mut);font-size:11px}
+.side a:hover{background:#fafbfc}
+.side a.on{border-left-color:var(--acc);background:#fbf7f2;font-weight:600}
+.doc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:10px 10px 0 0;padding:18px 20px;border-bottom:0}
+h1{margin:0;font:700 22px/1.2 Georgia,serif}
+.muted{color:var(--mut);margin:4px 0 0}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.tools input,.tools select{height:36px;border:1px solid var(--line);border-radius:8px;padding:0 10px;font:inherit;background:#fff}
+.tools input{width:290px}
+.btn{height:36px;border:1px solid var(--acc2);background:var(--acc2);color:#fff;border-radius:8px;padding:0 14px;font:inherit;cursor:pointer}
+.tablewrap{background:#fff;border:1px solid var(--line);border-radius:0 0 10px 10px;overflow:auto}
+table.cat{width:100%;border-collapse:collapse}
+.cat th{position:sticky;top:0;background:var(--acc2);color:#fff;text-align:left;font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.6px;padding:10px 12px;z-index:1}
+.cat td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.cat tbody tr:nth-child(even){background:#fbfbfd}
+.cat .r{text-align:right;white-space:nowrap}
+.c-n{width:44px;color:var(--mut)} td.c-n{color:var(--mut);font-size:12px}
+.c-ph{width:150px}
+.ph{display:flex;gap:4px}
+.ph img{width:140px;height:105px;object-fit:contain;background:#fff;border:1px solid var(--line);border-radius:6px;cursor:zoom-in}
+.ph img+img{width:64px;height:105px}
+.item{font-weight:700;font-size:15px;white-space:nowrap}
+.tag{display:inline-block;margin-top:3px;font-size:11px;color:var(--mut)}
+.size{white-space:pre-line;font-size:13px}
+.note{display:block;margin-top:4px;font-size:12px;color:var(--acc)}
+.price{font-size:12px;color:var(--acc2);font-weight:600;white-space:nowrap}
+.empty{padding:40px;text-align:center;color:var(--mut)}
+.more{padding:16px;text-align:center}
+.foot{margin-top:18px;font-size:12px;color:var(--ink)}
+.lb{position:fixed;inset:0;background:rgba(15,20,30,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9;cursor:zoom-out}
+.lb[hidden]{display:none}
+.lb img{max-width:92vw;max-height:80vh;background:#fff;border-radius:8px}
+.lb div{color:#fff;margin-top:10px;font-weight:600}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.side{display:none}.tools input{width:100%}.meta{grid-template-columns:1fr 1fr}}
+@media print{.side,.tools,.more,.top .meta{display:none}.layout{display:block}.cat th{position:static;color:#000;background:#eee}.tablewrap,.doc-head{border:0}body{background:#fff}tr{page-break-inside:avoid}}
