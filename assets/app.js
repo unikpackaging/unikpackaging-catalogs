@@ -4,6 +4,9 @@ var MAIL='info@unikpackaging.com',KEY='upk_wishlist',CKEY='upk_wishlist_contact'
 D.collections.forEach(function(c){C[c.id]=c});
 function uid(it){return it.c+':'+it.i}
 D.items.forEach(function(it){BY[uid(it)]=it});
+/* ids of rows merged into an identical row elsewhere (old wishlists / share links) */
+var AL=D.alias||{};function rid(id){id=String(id);return AL[id]||id}
+function uniq(a){var s={};return a.filter(function(x){if(s[x.id])return false;s[x.id]=1;return true})}
 var $=function(id){return document.getElementById(id)};
 function esc(s){return String(s||'').replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]})}
 var CAM='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2.3l1.5-2h7.4l1.5 2h2.3A1.5 1.5 0 0 1 21 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.5"/></svg>';
@@ -24,7 +27,7 @@ function qtyText(x){var it=BY[x.id],pc=per(it);
   if(x.n)return x.n+(pc?' '+pc.u:'')+' (carton size on request)';
   return x.q||'-'}
 var WL=load();
-function load(){try{var a=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(a)?a.filter(function(x){return x&&BY[x.id]}).map(norm1):[]}catch(e){return[]}}
+function load(){try{var a=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(a)?uniq(a.filter(function(x){return x&&x.id}).map(function(x){x.id=rid(x.id);return x}).filter(function(x){return BY[x.id]})).map(norm1):[]}catch(e){return[]}}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(WL))}catch(e){}updateCount()}
 function idx(id){for(var i=0;i<WL.length;i++)if(WL[i].id===id)return i;return -1}
 function has(id){return idx(id)>-1}
@@ -46,7 +49,7 @@ function shareUrl(){
 var SH=null;
 (function(){
   var p=new URLSearchParams(location.search).get('wl');if(!p)return;
-  try{var o=JSON.parse(b64d(p));var it=(o.it||[]).map(function(a){var id=String(a[0]),v=a[1],e={id:id};if(typeof v==='number'){if(BY[id]&&per(BY[id]))e.c=v;else e.n=v}else if(v)e.q=String(v);return e}).filter(function(x){return BY[x.id]});
+  try{var o=JSON.parse(b64d(p));var it=(o.it||[]).map(function(a){var id=rid(a[0]),v=a[1],e={id:id};if(typeof v==='number'){if(BY[id]&&per(BY[id]))e.c=v;else e.n=v}else if(v)e.q=String(v);return e}).filter(function(x){return BY[x.id]});it=uniq(it);
     SH={n:o.n||'',co:o.co||'',it:it,map:{}};it.forEach(function(x){SH.map[x.id]=(x.c||x.n||x.q)?qtyText(x):''});
   }catch(e){SH={n:'',co:'',it:[],map:{},bad:true}}
 })();
@@ -57,9 +60,14 @@ function navHtml(){
   var h='<a href="#" data-c="">All collections<small>'+D.items.length+' items</small></a>'+
     '<a href="#'+WLV+'" data-c="'+WLV+'" class="nav-wl">&#9829; My wishlist<small id="navwl">'+WL.length+' items</small></a>';
   var o='<option value="">All collections ('+D.items.length+')</option><option value="'+WLV+'">&#9829; My wishlist</option>';
-  D.collections.forEach(function(c){
-    h+='<a href="#'+c.id+'" data-c="'+c.id+'">'+esc(c.name)+'<small>'+esc(c.type)+' · '+c.count+' items</small></a>';
-    o+='<option value="'+c.id+'">'+esc(c.name)+' — '+esc(c.type)+' ('+c.count+')</option>';
+  var G=[],GI={};D.collections.forEach(function(c){if(!(c.type in GI)){GI[c.type]=G.length;G.push({t:c.type,cs:[]})}G[GI[c.type]].cs.push(c)});
+  G.forEach(function(g){
+    h+='<div class="nav-g">'+esc(g.t)+'</div>'; o+='<optgroup label="'+esc(g.t)+'">';
+    g.cs.forEach(function(c){
+      h+='<a href="#'+c.id+'" data-c="'+c.id+'">'+esc(c.name)+'<small>'+c.count+' items'+(c.range?' · '+esc(c.range):'')+'</small></a>';
+      o+='<option value="'+c.id+'">'+esc(c.name)+' — '+esc(c.type)+' ('+c.count+')</option>';
+    });
+    o+='</optgroup>';
   });
   nav.innerHTML=h; sel.innerHTML=o;
 }
